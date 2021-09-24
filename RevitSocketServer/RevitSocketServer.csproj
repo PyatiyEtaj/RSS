@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	<Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExtensionLib\ExtensionLib.csproj" />
+    <ProjectReference Include="..\SocketServerEntities\SocketServerEntities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RevitAPI">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y &quot;$(TargetDir)RevitSocketServer.dll&quot; &quot;C:\ProgramData\Autodesk\Revit\Addins\2019\RevitSocketServer&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)SocketServerEntities.dll&quot; &quot;C:\ProgramData\Autodesk\Revit\Addins\2019\RevitSocketServer&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)ExtensionLib.dll&quot; &quot;C:\ProgramData\Autodesk\Revit\Addins\2019\RevitSocketServer&quot;" />
+  </Target>
+
+</Project>
